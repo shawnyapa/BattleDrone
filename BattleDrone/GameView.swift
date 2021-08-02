@@ -6,3 +6,10 @@
 //
 
 import Foundation
+import UIKit
+
+class GameView: UIView {
+    
+    let startButton = UIButton()
+    
+}
