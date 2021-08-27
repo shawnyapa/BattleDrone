@@ -14,6 +14,13 @@
 		61FEE72626B8AD3E00FD8D01 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 61FEE72426B8AD3E00FD8D01 /* LaunchScreen.storyboard */; };
 		61FEE72E26B8AD9500FD8D01 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE72D26B8AD9500FD8D01 /* GameViewController.swift */; };
 		61FEE73026B8AEFA00FD8D01 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE72F26B8AEFA00FD8D01 /* GameView.swift */; };
+		61FEE73226B8C41B00FD8D01 /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE73126B8C41B00FD8D01 /* GameController.swift */; };
+		61FEE74226B8C5B900FD8D01 /* GunTurret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE74126B8C5B900FD8D01 /* GunTurret.swift */; };
+		61FEE74426B8C5C200FD8D01 /* Bullet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE74326B8C5C200FD8D01 /* Bullet.swift */; };
+		61FEE74626B8C5CB00FD8D01 /* Target.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE74526B8C5CB00FD8D01 /* Target.swift */; };
+		61FEE74826B8C5D300FD8D01 /* FireControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE74726B8C5D300FD8D01 /* FireControl.swift */; };
+		61FEE74A26B8C5D800FD8D01 /* FireControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE74926B8C5D800FD8D01 /* FireControlView.swift */; };
+		61FEE74C26B8C5DD00FD8D01 /* FireControlButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE74B26B8C5DD00FD8D01 /* FireControlButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +33,13 @@
 		61FEE72726B8AD3E00FD8D01 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		61FEE72D26B8AD9500FD8D01 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		61FEE72F26B8AEFA00FD8D01 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		61FEE73126B8C41B00FD8D01 /* GameController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
+		61FEE74126B8C5B900FD8D01 /* GunTurret.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GunTurret.swift; sourceTree = "<group>"; };
+		61FEE74326B8C5C200FD8D01 /* Bullet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Bullet.swift; sourceTree = "<group>"; };
+		61FEE74526B8C5CB00FD8D01 /* Target.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Target.swift; sourceTree = "<group>"; };
+		61FEE74726B8C5D300FD8D01 /* FireControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireControl.swift; sourceTree = "<group>"; };
+		61FEE74926B8C5D800FD8D01 /* FireControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireControlView.swift; sourceTree = "<group>"; };
+		61FEE74B26B8C5DD00FD8D01 /* FireControlButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FireControlButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,12 +76,35 @@
 				61FEE71B26B8AD3D00FD8D01 /* SceneDelegate.swift */,
 				61FEE72D26B8AD9500FD8D01 /* GameViewController.swift */,
 				61FEE72F26B8AEFA00FD8D01 /* GameView.swift */,
+				61FEE73126B8C41B00FD8D01 /* GameController.swift */,
+				61FEE74D26B8C60800FD8D01 /* GameObjects */,
+				61FEE74E26B8C61500FD8D01 /* FireControl */,
 				61FEE71F26B8AD3D00FD8D01 /* Main.storyboard */,
 				61FEE72226B8AD3E00FD8D01 /* Assets.xcassets */,
 				61FEE72426B8AD3E00FD8D01 /* LaunchScreen.storyboard */,
 				61FEE72726B8AD3E00FD8D01 /* Info.plist */,
 			);
 			path = BattleDrone;
+			sourceTree = "<group>";
+		};
+		61FEE74D26B8C60800FD8D01 /* GameObjects */ = {
+			isa = PBXGroup;
+			children = (
+				61FEE74126B8C5B900FD8D01 /* GunTurret.swift */,
+				61FEE74326B8C5C200FD8D01 /* Bullet.swift */,
+				61FEE74526B8C5CB00FD8D01 /* Target.swift */,
+			);
+			path = GameObjects;
+			sourceTree = "<group>";
+		};
+		61FEE74E26B8C61500FD8D01 /* FireControl */ = {
+			isa = PBXGroup;
+			children = (
+				61FEE74726B8C5D300FD8D01 /* FireControl.swift */,
+				61FEE74926B8C5D800FD8D01 /* FireControlView.swift */,
+				61FEE74B26B8C5DD00FD8D01 /* FireControlButton.swift */,
+			);
+			path = FireControl;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -141,8 +178,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				61FEE72E26B8AD9500FD8D01 /* GameViewController.swift in Sources */,
+				61FEE74826B8C5D300FD8D01 /* FireControl.swift in Sources */,
+				61FEE74C26B8C5DD00FD8D01 /* FireControlButton.swift in Sources */,
+				61FEE73226B8C41B00FD8D01 /* GameController.swift in Sources */,
 				61FEE71A26B8AD3D00FD8D01 /* AppDelegate.swift in Sources */,
+				61FEE74426B8C5C200FD8D01 /* Bullet.swift in Sources */,
 				61FEE73026B8AEFA00FD8D01 /* GameView.swift in Sources */,
+				61FEE74226B8C5B900FD8D01 /* GunTurret.swift in Sources */,
+				61FEE74626B8C5CB00FD8D01 /* Target.swift in Sources */,
+				61FEE74A26B8C5D800FD8D01 /* FireControlView.swift in Sources */,
 				61FEE71C26B8AD3D00FD8D01 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
