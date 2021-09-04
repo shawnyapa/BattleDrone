@@ -8,7 +8,8 @@
 import Foundation
 import UIKit
 
-class GameViewController: UIViewController, GameViewDelegate {
+// Note: This View Controller is the initial View in the Game
+class GameViewController: UIViewController {
     
     var gameController: GameController = GameController()
 
@@ -21,6 +22,11 @@ class GameViewController: UIViewController, GameViewDelegate {
         view = gameView
     }
 
+
+}
+
+extension GameViewController: GameViewDelegate {
+    
     func startButtonPressed() {
         guard let gameView = view as? GameView else {
             return
@@ -29,5 +35,9 @@ class GameViewController: UIViewController, GameViewDelegate {
         gameController.layoutGameARView(forView: view)
         gameController.startGame()
     }
-
+    
+    func configureGameButtonPressed() {
+        let gameConfigureViewController = GameConfigurationViewController()
+        present(gameConfigureViewController, animated: true, completion: nil)
+    }
 }

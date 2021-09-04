@@ -16,9 +16,10 @@ protocol HasWeapon {
     func moveBulletToFirePoint(bullet: Bullet)
     func launchBullet(bullet: Bullet)
     func fireBullet()
+    func hasAvailableBullets() -> Bool
 }
 
-protocol FireControlDelegate {
+protocol FireControlDelegate: AnyObject {
     func rotateGunUp()
     func rotateGunDown()
     func rotateGunLeft()
@@ -79,5 +80,8 @@ class FireControl: FireControlDelegate {
             return
         }
         weapon.fireBullet()
+        if weapon.hasAvailableBullets() == false {
+            fireControlView?.fireButton?.isHidden = true
+        }
     }
 }

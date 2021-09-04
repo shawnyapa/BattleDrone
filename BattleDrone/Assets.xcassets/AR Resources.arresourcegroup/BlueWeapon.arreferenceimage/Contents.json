@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Prince1.jpg",
+      "filename" : "BlueWeaponText.png",
       "idiom" : "universal"
     }
   ],
@@ -11,6 +11,6 @@
   },
   "properties" : {
     "unit" : "inches",
-    "width" : 7
+    "width" : 5
   }
 }

@@ -5,10 +5,10 @@
   },
   "resources" : [
     {
-      "filename" : "Prince1.arreferenceimage"
+      "filename" : "BlueWeapon.arreferenceimage"
     },
     {
-      "filename" : "Prince2.arreferenceimage"
+      "filename" : "RedTarget.arreferenceimage"
     }
   ]
 }

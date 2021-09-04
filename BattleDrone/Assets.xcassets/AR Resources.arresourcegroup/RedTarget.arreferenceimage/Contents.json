@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Prince2.jpg",
+      "filename" : "RedTargetText.png",
       "idiom" : "universal"
     }
   ],
@@ -11,6 +11,6 @@
   },
   "properties" : {
     "unit" : "inches",
-    "width" : 7.7250000000000005
+    "width" : 4.5
   }
 }

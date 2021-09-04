@@ -19,7 +19,7 @@ enum FireControlButtonType {
 class FireControlButton: UIButton {
     
     var fireControlButtonType: FireControlButtonType = .Up
-    var fireControlDelegate: FireControlDelegate?
+    weak var fireControlDelegate: FireControlDelegate?
     var buttonIsPressed: Bool = false
     
     convenience init(frame: CGRect, buttonType: FireControlButtonType, delegate: FireControlDelegate) {

@@ -13,7 +13,6 @@ class Target: Entity, HasModel, HasCollision {
     var healthPoints: Int = 50
     let color = UIColor.red
     let size:Float = 0.10
-    let anchorImageName = "Prince1"
     
     required init() {
         super.init()

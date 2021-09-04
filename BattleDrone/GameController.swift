@@ -38,16 +38,16 @@ class GameObject {
 class GameController: NSObject {
     
     let arView = ARView(frame: CGRect())
-    var gameObjects = [GameObject(imageName: "Prince1", gameObjectType: ARGameObjectType.Target), GameObject(imageName: "Prince2", gameObjectType: ARGameObjectType.Gun)]
+    var gameObjects = [GameObject(imageName: "RedTarget", gameObjectType: ARGameObjectType.Target), GameObject(imageName: "BlueWeapon", gameObjectType: ARGameObjectType.Gun)]
             
     func layoutGameARView(forView view:UIView) {
         view.addSubview(self.arView)
         let margins = view.layoutMarginsGuide
         self.arView.translatesAutoresizingMaskIntoConstraints = false
-        self.arView.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: 0).isActive = true
-        self.arView.topAnchor.constraint(equalTo: margins.topAnchor, constant: 0).isActive = true
-        self.arView.heightAnchor.constraint(equalTo: margins.heightAnchor, constant: 0).isActive = true
-        self.arView.widthAnchor.constraint(equalTo: margins.widthAnchor, constant: 0).isActive = true
+        self.arView.topAnchor.constraint(equalTo: margins.topAnchor, constant: -10).isActive = true
+        self.arView.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: 10).isActive = true
+        self.arView.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: -15).isActive = true
+        self.arView.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: 15).isActive = true
     }
     
     func startGame() {
@@ -74,7 +74,7 @@ class GameController: NSObject {
     
     func setupARConfigurationWithImageAnchors(arView: ARView) {
         guard let referenceImages = ARReferenceImage.referenceImages(inGroupNamed: "AR Resources", bundle: nil) else {
-            os_log("Unable to Load Images")
+            os_log("Unable to Load AR Reference Images")
             return
         }
         let configuration = ARWorldTrackingConfiguration()
@@ -114,7 +114,7 @@ extension GameController: ARSessionDelegate {
         // didAdd ARAnchor
         for arAnchor in anchors {
             if let arImageAnchor = arAnchor as? ARImageAnchor {
-            print("Found Image Anchor")
+            print("Found Image Anchor named \(arImageAnchor.name!)")
             evaluateImageAnchorForGameObjectPlacementInARView(imageAnchor: arImageAnchor, arView: arView)
             }
         }

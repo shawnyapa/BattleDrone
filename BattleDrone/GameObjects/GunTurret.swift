@@ -13,8 +13,8 @@ class GunTurret: Entity, HasModel, HasPhysics, HasCollision, HasWeapon {
     let healthPoints: Int = 100
     let color = UIColor.gray
     let size:Float = 0.05
-    let anchorImageName = "Prince2"
     var bullets = [Bullet]()
+    var totalBullets: Int = 20 // (20+1)
     var activeBullet: Int = 0
     var firePointModel: ModelEntity?
     var fireControl: FireControl?
@@ -54,7 +54,7 @@ class GunTurret: Entity, HasModel, HasPhysics, HasCollision, HasWeapon {
     }
     
     func addBulletsToScene (anchorEntity: AnchorEntity) {
-        for i in 0...10 {
+        for i in 0...totalBullets {
             let bullet = bullets[i]
             anchorEntity.addChild(bullet)
             bullet.addCollisions()
@@ -65,7 +65,7 @@ class GunTurret: Entity, HasModel, HasPhysics, HasCollision, HasWeapon {
     func createBullets() {
         let bullet = Bullet(velocityVector: gunFirePointDelta(), owner: self)
         bullets.append(bullet)
-        for _ in 1...10 {
+        for _ in 1...totalBullets {
             let bullet = bullet.clone(recursive: true)
             bullets.append(bullet)
         }
@@ -107,10 +107,17 @@ class GunTurret: Entity, HasModel, HasPhysics, HasCollision, HasWeapon {
     }
     
     func fireBullet() {
+        if hasAvailableBullets() == false {
+            return
+        }
         let bullet = bullets[activeBullet]
         bullet.velocityVector = gunFirePointDelta()
-        //moveBulletToFirePoint(bullet: bullet) // ***SY Remove
+        //moveBulletToFirePoint(bullet: bullet) // ***SY Remove and rework HasWeapon Protocol (Compact Methods)
         launchBullet(bullet: bullet)
         activeBullet+=1
+    }
+    
+    func hasAvailableBullets() -> Bool {
+        return activeBullet<totalBullets
     }
 }
