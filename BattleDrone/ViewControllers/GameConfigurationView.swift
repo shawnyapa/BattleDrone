@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol GameConfigurationViewDelegate: AnyObject {
-    func saveButtonPressed()
+    func saveButtonPressed(gameConfiguration: GameConfiguration)
     func cancelButtonPressed()
 }
 
@@ -31,11 +31,13 @@ class GameConfigurationView: UIView {
     let hitsRequiredLabel = UILabel()
     let hitsRequiredIndicator = UIPickerView()
     let hitsRequiredRange: [Int] = Array(0...50)
+    var hitsRequiredSelected: Int = 0
     
     let maxTimeView = UIView()
     let maxTimeLabel = UILabel()
     let maxTimeIndicator = UIPickerView()
     let maxTimeRangeInSeconds: [Int] = Array(0...60)
+    var maxTimeSelected: Int = 0
     
     let targetMovementView = UIView()
     let targetMovementLabel = UILabel()
@@ -44,7 +46,18 @@ class GameConfigurationView: UIView {
     let saveButton = UIButton()
     let cancelButton = UIButton()
     
-    func setupView() {
+    func setupViewWithGameConfiguration(gameConfiguration: GameConfiguration = GameConfiguration.defaultConfiguration()) {
+        setupView()
+        usernameTextField.text = gameConfiguration.username
+        challengeTypeSelector.selectedSegmentIndex = gameConfiguration.challengeType.rawValue
+        updateViewForChallengeType(challengeType: gameConfiguration.challengeType, animated: false)
+        hitsRequiredIndicator.selectRow(gameConfiguration.hitsRequired, inComponent: 0, animated: false)
+        maxTimeIndicator.selectRow(gameConfiguration.maxTime, inComponent: 0, animated: false)
+        targetMovementSelector.selectedSegmentIndex = gameConfiguration.targetMovement.rawValue
+        stackView.setNeedsDisplay()
+    }
+    
+    private func setupView() {
         backgroundColor = .white
         // StackView Setup
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -64,7 +77,8 @@ class GameConfigurationView: UIView {
         usernameLabel.text = "Username:"
         usernameLabel.textColor = .black
         usernameTextField.translatesAutoresizingMaskIntoConstraints = false
-        usernameTextField.placeholder = "Your Username"
+        usernameTextField.placeholder = GameConfiguration.defaultUsername
+        usernameTextField.delegate = self
         usernameView.addSubview(usernameLabel)
         usernameView.addSubview(usernameTextField)
         usernameLabel.leadingAnchor.constraint(equalTo: usernameView.leadingAnchor, constant: 10).isActive = true
@@ -161,13 +175,10 @@ class GameConfigurationView: UIView {
         cancelButton.setTitleColor(.black, for: .normal)
         cancelButton.addTarget(self, action: #selector(cancelButtonPressed(_:)), for: .touchUpInside)
     }
-    
-    func setupViewWithValues() {
-        showMaxHitsRequired()
-    }
-    
+        
     @objc func saveButtonPressed(_ sender:UIButton) {
-        gameConfigurationViewDelegate?.saveButtonPressed()
+        let gameConfiguration = gatherGameConfigurationFromView()
+        gameConfigurationViewDelegate?.saveButtonPressed(gameConfiguration: gameConfiguration)
     }
     
     @objc func cancelButtonPressed(_ sender:UIButton) {
@@ -175,39 +186,77 @@ class GameConfigurationView: UIView {
     }
     
     @objc func challengeTypeSelected(_ segmentedControl: UISegmentedControl) {
-        switch segmentedControl.selectedSegmentIndex {
-        case 0:
-            showMaxHitsRequired()
-        case 1:
-            showMaxTimeAllowed()
-        default:
-            showMaxHitsRequired()
+        if let challengeType = ChallengeType(rawValue: segmentedControl.selectedSegmentIndex) {
+            updateViewForChallengeType(challengeType: challengeType, animated: true)
         }
     }
     
-    func showMaxHitsRequired() {
-        UIView.animate(withDuration: 0.3) {
+    private func gatherGameConfigurationFromView() -> GameConfiguration {
+        let username = self.usernameTextField.text ?? GameConfiguration.defaultUsername
+        let challengeType = ChallengeType(rawValue: challengeTypeSelector.selectedSegmentIndex) ?? .hitsRequired
+        let targetMovement = TargetMovement(rawValue: targetMovementSelector.selectedSegmentIndex) ?? .fixed
+        let gameConfiguration = GameConfiguration(username: username, challengeType: challengeType, hitsRequired: self.hitsRequiredSelected, maxTime: self.maxTimeSelected, targetMovement: targetMovement)
+        return gameConfiguration
+    }
+    
+    private func updateViewForChallengeType(challengeType: ChallengeType, animated: Bool) {
+        switch challengeType {
+            case .hitsRequired:
+                showMaxHitsRequired(animated: animated)
+            case .maxTime:
+                showMaxTimeAllowed(animated: animated)
+            }
+    }
+    
+    private func showMaxHitsRequired(animated: Bool) {
+        if animated {
+            UIView.animate(withDuration: 0.3) {
+                self.stackView.arrangedSubviews[3].isHidden = true
+            } completion: { success in
+                UIView.animate(withDuration: 0.3) {
+                    self.stackView.arrangedSubviews[2].isHidden = false
+                }
+            }
+        } else {
             self.stackView.arrangedSubviews[3].isHidden = true
-        } completion: { success in
-            UIView.animate(withDuration: 0.3) {
-                self.stackView.arrangedSubviews[2].isHidden = false
-            }
+            self.stackView.arrangedSubviews[2].isHidden = false
         }
     }
     
-    func showMaxTimeAllowed() {
-        UIView.animate(withDuration: 0.3) {
-            self.stackView.arrangedSubviews[2].isHidden = true
-        } completion: { success in
+    private func showMaxTimeAllowed(animated: Bool) {
+        if animated {
             UIView.animate(withDuration: 0.3) {
-                self.stackView.arrangedSubviews[3].isHidden = false
+                self.stackView.arrangedSubviews[2].isHidden = true
+            } completion: { success in
+                UIView.animate(withDuration: 0.3) {
+                    self.stackView.arrangedSubviews[3].isHidden = false
+                }
             }
+        } else {
+            self.stackView.arrangedSubviews[2].isHidden = true
+            self.stackView.arrangedSubviews[3].isHidden = false
         }
     }
     
     @objc func targetMovementSelected(_ segmentedControl: UISegmentedControl) {
     }
     
+}
+
+extension GameConfigurationView: UITextFieldDelegate {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        if textField.text == GameConfiguration.defaultUsername {
+            textField.clearsOnBeginEditing = true
+        } else {
+            textField.clearsOnBeginEditing = false
+        }
+        return true
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }
 
 extension GameConfigurationView: UIPickerViewDataSource {
@@ -240,7 +289,16 @@ extension GameConfigurationView: UIPickerViewDelegate {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        // Do stuff per Picker
+        guard component == 0 else {
+            return
+        }
+        if pickerView == self.hitsRequiredIndicator {
+            let number = hitsRequiredRange[row]
+            self.hitsRequiredSelected = number
+        } else if pickerView == self.maxTimeIndicator {
+            let number = maxTimeRangeInSeconds[row]
+            self.maxTimeSelected = number
+        }
     }
 }
 

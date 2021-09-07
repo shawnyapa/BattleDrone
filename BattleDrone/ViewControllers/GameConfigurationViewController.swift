@@ -15,19 +15,24 @@ class GameConfigurationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         gameConfigurationView = GameConfigurationView()
-        gameConfigurationView?.setupView()
+        // ***SY Implement Get Game Config with Persistence layer
+        gameConfigurationView?.setupViewWithGameConfiguration()
         gameConfigurationView?.gameConfigurationViewDelegate = self
         view = gameConfigurationView
     }
     
     
-    func validateUserInput() -> Bool {
-        
-        return true
+    func validateUserInput(gameConfiguration: GameConfiguration) -> Bool {
+        if gameConfiguration.username.isEmpty || gameConfiguration.username == GameConfiguration.defaultUsername {
+            return false
+        } else {
+            return true
+        }
     }
     
-    func saveUserInput() {
-        
+    func saveUserInput(gameConfiguration: GameConfiguration) {
+        // ***SY Implement Set Game Config with Persistence layer
+        //print(gameConfiguration.username, gameConfiguration.challengeType, gameConfiguration.hitsRequired, gameConfiguration.maxTime, gameConfiguration.targetMovement)
     }
     
     func dismissViewController() {
@@ -35,14 +40,17 @@ class GameConfigurationViewController: UIViewController {
     }
     
     func showErrorAlert() {
-        
+        let errorAlertController = UIAlertController(title: "Game Configuration Error", message: "Please enter a valid Username", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        errorAlertController.addAction(okAction)
+        present(errorAlertController, animated: true, completion: nil)
     }
 }
 
 extension GameConfigurationViewController: GameConfigurationViewDelegate {
-    func saveButtonPressed() {
-        if validateUserInput() {
-            saveUserInput()
+    func saveButtonPressed(gameConfiguration: GameConfiguration) {
+        if validateUserInput(gameConfiguration: gameConfiguration) {
+            saveUserInput(gameConfiguration: gameConfiguration)
             dismissViewController()
         } else {
             showErrorAlert()

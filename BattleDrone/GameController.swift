@@ -61,10 +61,10 @@ class GameController: NSObject {
             switch gameObject.gameObjectType {
             case .Gun:
                 gameObject.entity = GunTurret()
-                gameObject.arGameObjectStatus = .Created    // ***SY Add Async Completion on Status
+                gameObject.arGameObjectStatus = .Created
             case .Target:
                 gameObject.entity = Target()
-                gameObject.arGameObjectStatus = .Created    // ***SY Add Async Completion on Status
+                gameObject.arGameObjectStatus = .Created
             case .Bullet:
                 gameObject.entity = Bullet()
                 gameObject.arGameObjectStatus = .Created    // Should Not be Used as Bullet is not Primary

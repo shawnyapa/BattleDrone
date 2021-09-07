@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		619281D326E4347F00F6450F /* GameConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619281D226E4347F00F6450F /* GameConfiguration.swift */; };
 		61D4FBA226DFFC6100258861 /* GameConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D4FBA126DFFC6100258861 /* GameConfigurationView.swift */; };
 		61D4FBA426DFFC8000258861 /* GameConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61D4FBA326DFFC8000258861 /* GameConfigurationViewController.swift */; };
 		61FEE71A26B8AD3D00FD8D01 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61FEE71926B8AD3D00FD8D01 /* AppDelegate.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		619281D226E4347F00F6450F /* GameConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameConfiguration.swift; sourceTree = "<group>"; };
 		61D4FBA126DFFC6100258861 /* GameConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameConfigurationView.swift; sourceTree = "<group>"; };
 		61D4FBA326DFFC8000258861 /* GameConfigurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameConfigurationViewController.swift; sourceTree = "<group>"; };
 		61FEE71626B8AD3D00FD8D01 /* BattleDrone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BattleDrone.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,6 +92,7 @@
 				61FEE71926B8AD3D00FD8D01 /* AppDelegate.swift */,
 				61FEE71B26B8AD3D00FD8D01 /* SceneDelegate.swift */,
 				61FEE73126B8C41B00FD8D01 /* GameController.swift */,
+				619281D226E4347F00F6450F /* GameConfiguration.swift */,
 				61D4FB9E26DFFBEB00258861 /* ViewControllers */,
 				61FEE74D26B8C60800FD8D01 /* GameObjects */,
 				61FEE74E26B8C61500FD8D01 /* FireControl */,
@@ -199,6 +202,7 @@
 				61FEE74426B8C5C200FD8D01 /* Bullet.swift in Sources */,
 				61D4FBA226DFFC6100258861 /* GameConfigurationView.swift in Sources */,
 				61FEE73026B8AEFA00FD8D01 /* GameView.swift in Sources */,
+				619281D326E4347F00F6450F /* GameConfiguration.swift in Sources */,
 				61FEE74226B8C5B900FD8D01 /* GunTurret.swift in Sources */,
 				61D4FBA426DFFC8000258861 /* GameConfigurationViewController.swift in Sources */,
 				61FEE74626B8C5CB00FD8D01 /* Target.swift in Sources */,
