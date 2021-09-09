@@ -22,7 +22,6 @@ class GameViewController: UIViewController {
         view = gameView
     }
 
-
 }
 
 extension GameViewController: GameViewDelegate {

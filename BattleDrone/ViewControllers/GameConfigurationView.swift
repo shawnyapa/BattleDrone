@@ -50,10 +50,12 @@ class GameConfigurationView: UIView {
         setupView()
         usernameTextField.text = gameConfiguration.username
         challengeTypeSelector.selectedSegmentIndex = gameConfiguration.challengeType.rawValue
-        updateViewForChallengeType(challengeType: gameConfiguration.challengeType, animated: false)
         hitsRequiredIndicator.selectRow(gameConfiguration.hitsRequired, inComponent: 0, animated: false)
         maxTimeIndicator.selectRow(gameConfiguration.maxTime, inComponent: 0, animated: false)
+        hitsRequiredSelected = gameConfiguration.hitsRequired
+        maxTimeSelected = gameConfiguration.maxTime
         targetMovementSelector.selectedSegmentIndex = gameConfiguration.targetMovement.rawValue
+        updateViewForChallengeType(challengeType: gameConfiguration.challengeType, animated: false)
         stackView.setNeedsDisplay()
     }
     
@@ -195,7 +197,7 @@ class GameConfigurationView: UIView {
         let username = self.usernameTextField.text ?? GameConfiguration.defaultUsername
         let challengeType = ChallengeType(rawValue: challengeTypeSelector.selectedSegmentIndex) ?? .hitsRequired
         let targetMovement = TargetMovement(rawValue: targetMovementSelector.selectedSegmentIndex) ?? .fixed
-        let gameConfiguration = GameConfiguration(username: username, challengeType: challengeType, hitsRequired: self.hitsRequiredSelected, maxTime: self.maxTimeSelected, targetMovement: targetMovement)
+        let gameConfiguration = GameConfiguration(id: GameConfiguration.createUniqueId(), username: username, challengeType: challengeType, hitsRequired: self.hitsRequiredSelected, maxTime: self.maxTimeSelected, targetMovement: targetMovement)
         return gameConfiguration
     }
     
@@ -238,8 +240,7 @@ class GameConfigurationView: UIView {
         }
     }
     
-    @objc func targetMovementSelected(_ segmentedControl: UISegmentedControl) {
-    }
+    @objc func targetMovementSelected(_ segmentedControl: UISegmentedControl) {}
     
 }
 

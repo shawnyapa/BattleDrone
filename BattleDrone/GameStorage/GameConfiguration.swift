@@ -19,17 +19,22 @@ enum TargetMovement: Int, Codable {
     case hard
 }
 
-struct GameConfiguration: Codable {
+struct GameConfiguration: Codable, Identifiable {
     
     static let defaultUsername = "Your Username"
     
+    let id: UUID
     let username: String
     let challengeType: ChallengeType
     let hitsRequired: Int
     let maxTime: Int
     let targetMovement: TargetMovement
     
+    static func createUniqueId() -> UUID {
+        return UUID()
+    }
+    
     static func defaultConfiguration() -> GameConfiguration {
-        GameConfiguration(username: GameConfiguration.defaultUsername, challengeType: .hitsRequired, hitsRequired: 10, maxTime: 30, targetMovement: .fixed)
+        GameConfiguration(id: GameConfiguration.createUniqueId(), username: GameConfiguration.defaultUsername, challengeType: .hitsRequired, hitsRequired: 10, maxTime: 30, targetMovement: .fixed)
     }
 }

@@ -79,7 +79,7 @@ class GameController: NSObject {
         }
         let configuration = ARWorldTrackingConfiguration()
         configuration.detectionImages = referenceImages
-        arView.session.delegate = self  // ***SY Temporary
+        arView.session.delegate = self  // ***SY Refactor
         arView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
     }
     

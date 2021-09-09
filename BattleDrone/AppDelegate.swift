@@ -7,6 +7,17 @@
 
 import UIKit
 
+//TODO: ***SY
+// Add Persistence Layer (protocol based)
+// Add App Icon, Min Graphics, Game Instruction Info Labels, ReadMe Details on GitHub
+// Clean up HasWeapon Protocol
+// Add Check to prevent over-rotation in the Y direction on GunTurret
+// Extend Bullet travel distance, destroy on plane collison, recycle bullets
+// Add Score, Status Overlay (GameStatusView)
+// Calculate Scores, Persist Scores
+// Add Top Scores Display UX
+// Add Interface Stubs for Airtag API with LocationAnchors
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

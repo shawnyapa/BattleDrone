@@ -11,16 +11,15 @@ import UIKit
 class GameConfigurationViewController: UIViewController {
 
     var gameConfigurationView: GameConfigurationView?
+    let gameStorage = GameStorageFactory.createGameStorage(storageType: .UserDefaults)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         gameConfigurationView = GameConfigurationView()
-        // ***SY Implement Get Game Config with Persistence layer
-        gameConfigurationView?.setupViewWithGameConfiguration()
+        gameConfigurationView?.setupViewWithGameConfiguration(gameConfiguration: gameStorage.activeGameConfiguration())
         gameConfigurationView?.gameConfigurationViewDelegate = self
         view = gameConfigurationView
     }
-    
     
     func validateUserInput(gameConfiguration: GameConfiguration) -> Bool {
         if gameConfiguration.username.isEmpty || gameConfiguration.username == GameConfiguration.defaultUsername {
@@ -31,8 +30,7 @@ class GameConfigurationViewController: UIViewController {
     }
     
     func saveUserInput(gameConfiguration: GameConfiguration) {
-        // ***SY Implement Set Game Config with Persistence layer
-        //print(gameConfiguration.username, gameConfiguration.challengeType, gameConfiguration.hitsRequired, gameConfiguration.maxTime, gameConfiguration.targetMovement)
+        gameStorage.saveGameConfiguration(gameConfiguration: gameConfiguration)
     }
     
     func dismissViewController() {
