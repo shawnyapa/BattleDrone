@@ -16,12 +16,32 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        gameController.gameControllerDelegate = self
         let gameView = GameView()
         gameView.gameViewDelegate = self
         gameView.setupView()
         view = gameView
     }
+    
+    func showGameEndedAlert() {
+        let gameEndedAlertController = UIAlertController(title: "Game Over", message: "Success! Would you like to play again?", preferredStyle: .alert)
+        let playAgainAction = UIAlertAction(title: "Play Again", style: .default, handler: {_ in
+            self.gameController.restartGame()
+        })
+        gameEndedAlertController.addAction(playAgainAction)
+        let doneAction = UIAlertAction(title: "Done", style: .cancel, handler: {_ in
+            
+        })
+        gameEndedAlertController.addAction(doneAction)
+        present(gameEndedAlertController, animated: true, completion: nil)
+    }
 
+}
+
+extension GameViewController: GameControllerDelegate {
+    func gameEnded() {
+        showGameEndedAlert()
+    }
 }
 
 extension GameViewController: GameViewDelegate {
