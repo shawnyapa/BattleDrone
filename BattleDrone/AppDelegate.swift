@@ -8,9 +8,10 @@
 import UIKit
 
 //TODO: ***SY
-// Add Persistence Layer (protocol based)
+// Add Persistence Layer (protocol based) - DONE
+// Add Game Ended Workflow
 // Add App Icon, Min Graphics, Game Instruction Info Labels, ReadMe Details on GitHub
-// Clean up HasWeapon Protocol
+// Clean up HasWeapon Protocol, add HasMoveableWeapon Protocol
 // Add Check to prevent over-rotation in the Y direction on GunTurret
 // Extend Bullet travel distance, destroy on plane collison, recycle bullets
 // Add Score, Status Overlay (GameStatusView)

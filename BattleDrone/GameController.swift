@@ -10,6 +10,13 @@ import ARKit
 import RealityKit
 import OSLog
 
+// MARK: NotificationCenter Constants
+extension Notification.Name {
+    static var gameObjectInactivated: Notification.Name {
+        .init("GameObject.Inactivated")
+    }
+}
+
 enum ARGameObjectType {
     case Target
     case Gun
@@ -19,7 +26,7 @@ enum ARGameObjectType {
 enum ARGameObjectStatus {
     case Request
     case Created
-    case ActiveInScene
+    case AnchoredInScene
 }
 
 class GameObject {
@@ -35,8 +42,29 @@ class GameObject {
     }
 }
 
+// MARK: GameObject Protocols
+public protocol HasHealth {
+    func damageToHealth(damagePoints: Int)
+    func checkHealth()
+}
+
+protocol HasWeapon {
+    func createBullets()
+    func setupGunFirePoint() -> ModelEntity
+    func gunFirePointDelta() -> SIMD3<Float>
+    func moveBulletToFirePoint(bullet: Bullet)
+    func launchBullet(bullet: Bullet)
+    func fireBullet()
+    func hasAvailableBullets() -> Bool
+}
+
+protocol GameControllerDelegate: AnyObject  {
+    func gameEnded()
+}
+
 class GameController: NSObject {
     
+    weak var gameControllerDelegate: GameControllerDelegate?
     let arView = ARView(frame: CGRect())
     var gameObjects = [GameObject(imageName: "RedTarget", gameObjectType: ARGameObjectType.Target), GameObject(imageName: "BlueWeapon", gameObjectType: ARGameObjectType.Gun)]
             
@@ -53,10 +81,19 @@ class GameController: NSObject {
     func startGame() {
         createARObjects()
         setupARConfigurationWithImageAnchors(arView: arView)
+        setupNotificationObservers()
+    }
+    
+    func restartGame() {
+        // ***SY Reset each GameObject
+    }
+    
+    func endGame() {
+        // ***SY Remove arView, Remove Objects
     }
     
     // MARK: ARObject Setups
-    func createARObjects () {
+    private func createARObjects () {
         for gameObject in gameObjects {
             switch gameObject.gameObjectType {
             case .Gun:
@@ -72,7 +109,7 @@ class GameController: NSObject {
         }
     }
     
-    func setupARConfigurationWithImageAnchors(arView: ARView) {
+    private func setupARConfigurationWithImageAnchors(arView: ARView) {
         guard let referenceImages = ARReferenceImage.referenceImages(inGroupNamed: "AR Resources", bundle: nil) else {
             os_log("Unable to Load AR Reference Images")
             return
@@ -83,8 +120,12 @@ class GameController: NSObject {
         arView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
     }
     
+    private func setupNotificationObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(evaluateGameObjectsForGameEnded), name: .gameObjectInactivated, object: nil)
+    }
+    
     // MARK: ARObject Scene Placement
-    func evaluateImageAnchorForGameObjectPlacementInARView(imageAnchor: ARImageAnchor, arView: ARView) {
+    private func evaluateImageAnchorForGameObjectPlacementInARView(imageAnchor: ARImageAnchor, arView: ARView) {
         for gameObject in gameObjects {
             if imageAnchor.referenceImage.name == gameObject.imageName && gameObject.arGameObjectStatus == .Created {
                 let anchorEntity = AnchorEntity(anchor: imageAnchor)
@@ -92,6 +133,7 @@ class GameController: NSObject {
                     anchorEntity.addChild(gameObjectEntity)
                     gameObject.anchor = anchorEntity
                     arView.scene.addAnchor(anchorEntity)
+                    gameObject.arGameObjectStatus = .AnchoredInScene
                     if gameObject.gameObjectType == .Gun {
                         if let gunTurret = gameObject.entity as? GunTurret {
                             gunTurret.anchorWeaponAndBullets(anchorEntity: anchorEntity)
@@ -101,6 +143,28 @@ class GameController: NSObject {
                 }
             }
         }
+    }
+
+    // MARK: ARObject Status Evaluation
+    @objc func evaluateGameObjectsForGameEnded() {
+        var continueGame = false
+        for gameObject in gameObjects {
+            if let entity = gameObject.entity {
+                // Check if there are any Non-Weapon(Targets) that are still active in the ARScene
+                // If true then continue game, if false for all gameObjects then endGame
+                if entity.isActive == true, (entity.self is HasWeapon) == false {
+                    continueGame = true
+                    break
+                }
+            }
+        }
+        if continueGame == false {
+           gameEnded()
+        }
+    }
+    
+    private func gameEnded() {
+        gameControllerDelegate?.gameEnded()
     }
 }
 

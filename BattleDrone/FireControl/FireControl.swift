@@ -9,16 +9,6 @@ import Foundation
 import UIKit
 import RealityKit
 
-protocol HasWeapon {
-    func createBullets()
-    func setupGunFirePoint() -> ModelEntity
-    func gunFirePointDelta() -> SIMD3<Float>
-    func moveBulletToFirePoint(bullet: Bullet)
-    func launchBullet(bullet: Bullet)
-    func fireBullet()
-    func hasAvailableBullets() -> Bool
-}
-
 protocol FireControlDelegate: AnyObject {
     func rotateGunUp()
     func rotateGunDown()

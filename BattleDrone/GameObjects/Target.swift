@@ -10,7 +10,8 @@ import RealityKit
 import UIKit
 
 class Target: Entity, HasModel, HasCollision {
-    var healthPoints: Int = 50
+    let defaultHealthPoints = 50
+    var healthPoints: Int = 0
     let color = UIColor.red
     let size:Float = 0.10
     
@@ -20,6 +21,12 @@ class Target: Entity, HasModel, HasCollision {
         let materialResource = SimpleMaterial(color: color, isMetallic: false)
         self.components[ModelComponent] = ModelComponent(mesh: meshResource, materials: [materialResource])
         self.components[CollisionComponent] = CollisionComponent(shapes: [ShapeResource.generateSphere(radius: size)], mode: .trigger, filter: .sensor) // Testing .sensor
+        self.healthPoints = defaultHealthPoints
+    }
+    
+    func reset() {
+        healthPoints = defaultHealthPoints
+        isEnabled = true
     }
 }
 
@@ -33,6 +40,7 @@ extension Target: HasHealth {
     func checkHealth(){
         if healthPoints<=0 {
             isEnabled = false
+            NotificationCenter.default.post(name:.gameObjectInactivated, object: nil)
         }
     }
 }

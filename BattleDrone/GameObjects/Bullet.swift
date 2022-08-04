@@ -73,32 +73,10 @@ class Bullet: Entity, HasModel, HasCollision {
                 }
                 hasHealth.damageToHealth(damagePoints: bullet.damagePoints)
             }
-//            if let objectA = event.entityA as? Bullet {
-//                print("A Is Bullet")
-//            }
-//            if let objectB = event.entityB as? Target {
-//                print("B Is Target")
-//            }
-//            if let objectA = event.entityA as? Target {
-//                print("A Is Target")
-//            }
-//            if let objectB = event.entityB as? Bullet {
-//                print("B Is Bullet")
-//            }
-//            if let _ = event.entityA as? GunTurret {
-//                print("A Is GunTurret")
-//            }
-//            if let _ = event.entityB as? GunTurret {
-//                print("B Is GunTurret")
-//            }
         })
         collisionSubscription = beginSubscription
     }
 }
 
-public protocol HasHealth {
-    func damageToHealth(damagePoints: Int)
-    func checkHealth()
-}
 
 
